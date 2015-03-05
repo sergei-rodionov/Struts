@@ -1,0 +1,38 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+
+    <package name="action" extends="struts-default">
+
+        <interceptors>
+            <interceptor name="Timer" class="interceptor.TimerInterceptor"/>
+            <interceptor name="Login" class="interceptor.LoginInterceptor"/>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="Timer"/>
+                <interceptor-ref name="Login"/>
+                <interceptor-ref name="params" />
+            </interceptor-stack>
+        </interceptors>
+
+        <action name="Login" class="action.LoginAction">
+            <interceptor-ref name="Timer"/>
+            <interceptor-ref name="params"/>
+            <result name="login">/login.jsp</result>
+            <result name="success">/index.jsp</result>
+        </action>
+
+        <action name="Logout" class="action.LoginAction" method="logout">
+            <result>/index.jsp</result>
+        </action>
+
+        <action name="Hello" class="action.HelloAction">
+            <interceptor-ref name="myStack"/>
+            <result name="success">/success.jsp</result>
+            <result name="input">/index.jsp</result>
+            <result name="login">/login.jsp</result>
+        </action>
+
+    </package>
+</struts>
